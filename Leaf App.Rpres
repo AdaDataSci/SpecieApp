@@ -1,0 +1,58 @@
+Leaf App
+========================================================
+author: AdaDataSci
+date: 05/04/2017
+autosize: true
+Leaf App Documentation
+
+========================================================
+
+This app predicts specie when certain features of a leaf are entered in the prompt box and sliders. Features include;
+
+- Sepal.Length 
+- Sepal.Width 
+- Petal.Length 
+- Petal.Width
+
+Prediction uses decision tree and rpart method from Caret Package. 
+Accuracy on training set was 93%
+Link to App :https://adadatasci.shinyapps.io/shiny1
+Link to Documentation:https://github.com/AdaDataSci/SpecieApp/tree/git-hub
+
+Data
+========================================================
+Data is the Iris data set in R. Below are details of first few rows of data
+```{r}
+data(iris)
+head(iris)
+```
+
+R code
+========================================================
+Machine learning R code
+```{r}
+library(shiny)
+library(caret)
+library(rpart)
+library(rattle)
+data(iris)
+set.seed(123)
+inTrain <- createDataPartition(y=iris$Species,p=0.7, list=FALSE)
+  training <- iris[inTrain,]
+  rpart <-train(factor(Species) ~ .,method="rpart",data=training)
+```
+
+Confusion Matrix
+========================================================
+
+```{r}
+  confusionMatrix(rpart)
+```
+
+
+Decison Tree
+========================================================
+App prediction uses same algorithim as Decision Tree diagram below;
+```{r}
+  fancyRpartPlot(rpart$finalModel)
+```
